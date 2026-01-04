@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Battle Snake Arena</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Comfortaa:wght@700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #050505;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      #root {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.3s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      /* CRT EFFECT STYLES */
+      .crt-screen {
+        position: relative;
+        overflow: hidden;
+      }
+      .crt-screen::before {
+        content: " ";
+        display: block;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        z-index: 100;
+        background-size: 100% 3px, 3px 100%;
+        pointer-events: none;
+      }
+      .crt-screen::after {
+        content: " ";
+        display: block;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        background: rgba(18, 16, 16, 0.1);
+        opacity: 0;
+        z-index: 101;
+        pointer-events: none;
+        animation: flicker 0.15s infinite;
+      }
+      @keyframes flicker {
+        0% { opacity: 0.27861; }
+        5% { opacity: 0.34769; }
+        10% { opacity: 0.23604; }
+        15% { opacity: 0.90626; }
+        20% { opacity: 0.18128; }
+        25% { opacity: 0.83891; }
+        30% { opacity: 0.65583; }
+        35% { opacity: 0.57807; }
+        40% { opacity: 0.26559; }
+        45% { opacity: 0.84693; }
+        50% { opacity: 0.96019; }
+        55% { opacity: 0.08523; }
+        60% { opacity: 0.71313; }
+        65% { opacity: 0.33441; }
+        70% { opacity: 0.23423; }
+        75% { opacity: 0.35102; }
+        80% { opacity: 0.17513; }
+        85% { opacity: 0.44167; }
+        90% { opacity: 0.18792; }
+        95% { opacity: 0.51823; }
+        100% { opacity: 1; }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.33.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-[#050505] text-slate-100 select-none overflow-hidden">
+    <div id="root"></div>
+  </body>
+</html>
