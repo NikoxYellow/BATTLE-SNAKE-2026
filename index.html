@@ -1,170 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Snake Retro</title>
-    <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            margin: 0;
-            overflow: hidden;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        #gameArea {
-            margin-top: 20px;
-            border: 2px solid #555;
-            display: inline-block;
-        }
-        h1 { margin: 10px; color: #0f0; }
-        #scoreBoard { font-size: 20px; margin-bottom: 10px; }
-        button {
-            padding: 15px 30px; font-size: 20px;
-            background: #0f0; border: none; cursor: pointer;
-            margin-top: 10px;
-        }
-    </style>
-</head>
-<body>
+# ⚡ PROJECT ZERO: THE INVINCIBLE AI
 
-    <h1>SNAKE RETRO</h1>
-    <div id="scoreBoard">Score Joueur: <span id="pScore">0</span> | Score Robot: <span id="bScore">0</span></div>
-    
-    <canvas id="gameCanvas" width="800" height="600" style="background:#111;"></canvas>
-    
-    <br>
-    <button onclick="lancerJeu()">JOUER / REJOUER</button>
+> **A game edited by Sayel**
 
-    <script>
-        // CODE A L'ANCIENNE (COMPATIBLE VIEUX MAC)
-        var canvas = document.getElementById("gameCanvas");
-        var ctx = canvas.getContext("2d");
-        
-        var GRID = 20;
-        var COLS = 40; // 800 / 20
-        var ROWS = 30; // 600 / 20
-        
-        var intervalle;
-        var pomme = {x: 10, y: 10};
-        
-        // Le Joueur
-        var joueur = {
-            x: 5, y: 5,
-            vx: 1, vy: 0,
-            corps: [],
-            score: 0,
-            vivant: true,
-            couleur: "#0f0"
-        };
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![AI Status](https://img.shields.io/badge/AI-INVINCIBLE-red.svg)
 
-        // Le Robot
-        var robot = {
-            x: 30, y: 20,
-            vx: -1, vy: 0,
-            corps: [],
-            score: 0,
-            vivant: true,
-            couleur: "#f00"
-        };
+---
 
-        function lancerJeu() {
-            // Reset
-            joueur.x = 5; joueur.y = 5; joueur.vx = 1; joueur.vy = 0;
-            joueur.corps = []; joueur.score = 0; joueur.vivant = true;
-            
-            robot.x = 30; robot.y = 20; robot.vx = -1; robot.vy = 0;
-            robot.corps = []; robot.score = 0; robot.vivant = true;
-            
-            if(intervalle) clearInterval(intervalle);
-            intervalle = setInterval(boucleJeu, 100);
-        }
+### 🇫🇷 FRANÇAIS
+**Bienvenue dans l'antre de la bête.**
+Ce n'est pas juste un jeu de Morpion. C'est une expérience de survie psychologique. *Project Zero* met en scène une Intelligence Artificielle programmée avec une seule directive : **ne jamais perdre.**
 
-        function boucleJeu() {
-            // Fond noir
-            ctx.fillStyle = "black";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Pomme
-            ctx.fillStyle = "yellow";
-            ctx.fillRect(pomme.x * GRID, pomme.y * GRID, GRID-2, GRID-2);
-            
-            // Mise a jour des serpents
-            updateSerpent(joueur, "JOUEUR");
-            updateSerpent(robot, "ROBOT");
-            
-            // Scores
-            document.getElementById("pScore").innerText = joueur.score;
-            document.getElementById("bScore").innerText = robot.score;
-        }
+Votre objectif n'est pas de gagner — c'est mathématiquement impossible si vous faites la moindre erreur. Votre objectif est de survivre et d'arracher le match nul.
 
-        function updateSerpent(s, type) {
-            if(!s.vivant) return;
+### 🇬🇧 ENGLISH
+**Welcome to the beast's lair.**
+This is not just a Tic-Tac-Toe game. It is a psychological survival experience. *Project Zero* features an Artificial Intelligence programmed with a single directive: **never lose.**
 
-            // IA du Robot (Logique simple)
-            if(type === "ROBOT") {
-                if(s.x < pomme.x) { s.vx = 1; s.vy = 0; }
-                else if(s.x > pomme.x) { s.vx = -1; s.vy = 0; }
-                else if(s.y < pomme.y) { s.vx = 0; s.vy = 1; }
-                else if(s.y > pomme.y) { s.vx = 0; s.vy = -1; }
-            }
+Your goal is not to win — that is mathematically impossible if you make the slightest mistake. Your goal is to survive and force a draw.
 
-            // Deplacement
-            s.x += s.vx;
-            s.y += s.vy;
+---
 
-            // Traverser les murs
-            if(s.x < 0) s.x = COLS - 1;
-            if(s.x >= COLS) s.x = 0;
-            if(s.y < 0) s.y = ROWS - 1;
-            if(s.y >= ROWS) s.y = 0;
+## 🎮 DEMO / PREVIEW
 
-            // Manger pomme
-            if(s.x === pomme.x && s.y === pomme.y) {
-                s.score++;
-                pomme.x = Math.floor(Math.random() * COLS);
-                pomme.y = Math.floor(Math.random() * ROWS);
-            } else {
-                // Retirer la queue si pas mange
-                s.corps.shift();
-            }
+![Game Demo](https://via.placeholder.com/800x400?text=INSERT+YOUR+GAME+GIF+HERE)
+*(Insert a GIF of the gameplay here showing the neon effects)*
 
-            // Ajouter la tete
-            s.corps.push({x: s.x, y: s.y});
+---
 
-            // Dessiner
-            ctx.fillStyle = s.couleur;
-            for(var i=0; i<s.corps.length; i++) {
-                ctx.fillRect(s.corps[i].x * GRID, s.corps[i].y * GRID, GRID-2, GRID-2);
-                
-                // Collision Soi-meme (Game Over)
-                // On ne verifie pas la collision avec la tete elle-meme (le dernier element)
-                if(i < s.corps.length - 1) {
-                    if(s.x === s.corps[i].x && s.y === s.corps[i].y) {
-                        if(type === "JOUEUR") {
-                            s.vivant = false;
-                            alert("PERDU ! Score: " + s.score);
-                            clearInterval(intervalle);
-                        } else {
-                            // Robot respawn
-                            s.corps = [];
-                            s.x = Math.floor(Math.random() * COLS);
-                            s.y = Math.floor(Math.random() * ROWS);
-                        }
-                    }
-                }
-            }
-        }
+## 🔥 KEY FEATURES / FONCTIONNALITÉS CLÉS
 
-        // Controles Clavier
-        window.onkeydown = function(e) {
-            switch(e.keyCode) {
-                case 37: if(joueur.vx !== 1) { joueur.vx = -1; joueur.vy = 0; } break; // Gauche
-                case 38: if(joueur.vy !== 1) { joueur.vx = 0; joueur.vy = -1; } break; // Haut
-                case 39: if(joueur.vx !== -1) { joueur.vx = 1; joueur.vy = 0; } break; // Droite
-                case 40: if(joueur.vy !== -1) { joueur.vx = 0; joueur.vy = 1; } break; // Bas
-            }
-        };
-    </script>
-</body>
-</html>
+### 🤖 The Unbeatable Engine (Moteur Imbattable)
+* **EN:** Powered by a flawless algorithm (Minimax/Heuristic hybrid). It knows every tactic: The Corner Trap, The Center Defense, The Double Threat.
+* **FR:** Propulsé par un algorithme sans faille. Il connaît toutes les tactiques : Le Piège du Coin, La Défense Centrale, La Double Menace.
+
+### 🗣️ The "Trash Talk" System (IA Provocatrice)
+* **EN:** This AI has an ego. When it corners you or wins, it won't stay silent. It taunts your mistakes and mocks your defeat.
+* **FR:** Cette IA a un ego surdimensionné. Quand elle vous coince ou gagne, elle ne reste pas silencieuse. Elle se moque de vos erreurs et nargue votre défaite.
+
+> *"Your defeat was calculated 3 turns ago."*
+>
+> *"Votre défaite était calculée depuis 3 tours."*
+
+### 🎨 Cyberpunk Aesthetics (Esthétique Cyberpunk)
+* **EN:** Neon visuals, glitch effects, and immersive sound design.
+* **FR:** Visuels néons, effets de glitch et design sonore immersif.
+
+---
+
+## 🚀 INSTALLATION
+
+```bash
+# Clone the repository
+git clone [https://github.com/Sayel/project-zero-ai.git](https://github.com/Sayel/project-zero-ai.git)
+
+# Navigate to the directory
+cd project-zero-ai
+
+# Install dependencies
+npm install  # or pip install -r requirements.txt
+
+# Run the game
+npm start    # or python main.py
